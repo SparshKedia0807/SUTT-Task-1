@@ -2,7 +2,7 @@ import pandas as pd
 import json
 
 #reading the excel file
-df = pd.read_excel('Timetable Workbook - SUTT Task 1.xlsx', sheet_name='S2',skiprows=1)
+df = pd.read_excel('Timetable Workbook - SUTT Task 1.xlsx', sheet_name='S1',skiprows=1)
 
 #renaming rows
 column_mapping = {
@@ -56,9 +56,15 @@ with open("SUTT Task 1 Output.json", "r") as file:
 credit_L = data[0]["L"]
 credit_P = data[0]["P"]
 credit_U = data[0]["U"]
-credit = [
-    {'L' : credit_L,'P' : credit_P,'U' : credit_U}
-]
-data[0]["credits"] = [credit]
+credit =  {'L' : credit_L,'P' : credit_P,'U' : credit_U}
+data[0]["credits"] = credit
+with open("SUTT Task 1 Output.json", "w") as file:
+    json.dump(data,file,indent=4)
+
+#removing L,P,U
+with open("SUTT Task 1 Output.json", "r") as file:
+    data = json.load(file)
+index = 2
+data[0] = data[0][:index] + data[0][4:]
 with open("SUTT Task 1 Output.json", "w") as file:
     json.dump(data,file,indent=4)
