@@ -56,15 +56,23 @@ with open("SUTT Task 1 Output.json", "r") as file:
 credit_L = data[0]["L"]
 credit_P = data[0]["P"]
 credit_U = data[0]["U"]
-credit =  {'L' : credit_L,'P' : credit_P,'U' : credit_U}
+credit =  {'lectures' : credit_L,'practicals' : credit_P,'units' : credit_U}
 data[0]["credits"] = credit
+del data[0]["L"]
+del data[0]["P"]
+del data[0]["U"]
 with open("SUTT Task 1 Output.json", "w") as file:
     json.dump(data,file,indent=4)
 
-#removing L,P,U
+#extracting section data
 with open("SUTT Task 1 Output.json", "r") as file:
     data = json.load(file)
-index = 2
-data[0] = data[0][:index] + data[0][4:]
+instructors = []
+exists = False
+for i in range (len(data)):
+    if data[i]["sections"]:
+        exists = True
+        sections = data[i]["section"]
+        data[1]["sections"].append(data[i]["intructors"])
 with open("SUTT Task 1 Output.json", "w") as file:
     json.dump(data,file,indent=4)
